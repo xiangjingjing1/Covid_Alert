@@ -17,6 +17,8 @@ public class User {
     private String email;
     private String phone_number;
     private String password;
+    private String username;
+    private Boolean enabled;
 
     @ManyToMany
     @JoinTable(name="user_locations",
