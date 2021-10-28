@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
-@Entity(name="autorities")
+@Entity(name="authorities")
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Autorities {
+public class Authorities {
     private String username;
-    private String autority;
+    private String authority;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authority_id;
@@ -20,5 +20,21 @@ public class Autorities {
 
     public Long getAuthority_id() {
         return authority_id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

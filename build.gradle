@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'war'
 }
 
 group = 'com.example'
@@ -22,7 +23,9 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-jetty')
 	implementation('org.springframework.boot:spring-boot-starter-security')
 	testImplementation('org.springframework.security:spring-security-test')
+	implementation('org.springframework.boot:spring-boot-starter-tomcat')
 	runtimeOnly('org.apache.tomcat.embed:tomcat-embed-jasper')
+	implementation('org.springframework.boot:spring-boot-starter-mail')
 }
 
 configurations.implementation {

@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,6 +54,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+    @Secured("ROLE_ADMIN")
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
