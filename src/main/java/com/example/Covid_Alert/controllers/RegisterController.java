@@ -32,6 +32,7 @@ public class RegisterController {
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+
     @PostMapping("doRegister")
     public String register(@Validated @ModelAttribute("user")
                                    User user, BindingResult result) {

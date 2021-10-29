@@ -11,7 +11,29 @@
     <title>index</title>
 </head>
 <body>
-    <p> Page index </p>
+    <p> Welcome </p>
     <a href = "/doLogout"> Logout </a>
+    <p>Click the button to authorize geolocation</p>
+
+    <button onclick="getLocation()">My location</button>
+
+    <p id="demo"></p>
+
+    <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+        }
+    </script>
 </body>
 </html>
