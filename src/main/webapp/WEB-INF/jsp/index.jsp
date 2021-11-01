@@ -15,13 +15,17 @@
     <a href = "/doLogout"> Logout </a>
     <p>Click the button to authorize geolocation</p>
 
-    <button onclick="getLocation()">My location</button>
-
     <p id="demo"></p>
+
+    <form:form modelAttribute="location" method="POST" action="/getLocation">
+        <input type="hidden" name = "latitude" id="latitude" >
+        <input type="hidden" name = "longitude" id="longitude" >
+        <input type="hidden" name = "location_date" id="location_date" >
+        <input onclick="getLocation()" type="submit" role="button" value="Get Location">
+    </form:form>
 
     <script>
         var x = document.getElementById("demo");
-
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -32,7 +36,7 @@
 
         function showPosition(position) {
             x.innerHTML = "Latitude: " + position.coords.latitude +
-                "<br>Longitude: " + position.coords.longitude;
+                "<br>Longitude: " + position.coords.longitude + Date.now();
         }
     </script>
 </body>

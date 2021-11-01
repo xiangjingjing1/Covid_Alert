@@ -2,11 +2,16 @@ package com.example.Covid_Alert.controllers;
 
 import com.example.Covid_Alert.models.Location;
 import com.example.Covid_Alert.repositories.LocationRepository;
+import com.example.Covid_Alert.util.OnCreateLocationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,6 +26,9 @@ public class LocationsController {
         return locationRepository.findAll();
     }
 
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
     @GetMapping
     @RequestMapping("{id}")
     public Location get(@PathVariable Long id) {
@@ -28,6 +36,17 @@ public class LocationsController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location with ID "+id+" not found");
         }
         return locationRepository.getById(id);
+    }
+
+    @PostMapping("getLocation")
+    public String saveLocation(@Validated @ModelAttribute("location")
+                                   Location location, BindingResult result) {
+        // save location object:
+        locationRepository.saveAndFlush(location);
+        // create/save a location object
+        eventPublisher.publishEvent(new OnCreateLocationEvent("/",location));
+        return "index";
+
     }
 
     @PostMapping
