@@ -25,13 +25,13 @@ public class GetLocationController {
     @PostMapping("/getLocation")
     public String saveLocation(@Validated @ModelAttribute("location")
                                        Location location, BindingResult result) {
-        locationRepository.save(location);
         // create/save a location object
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
         location.setLocation_date(ts);
+        locationRepository.save(location);
         eventPublisher.publishEvent(new OnCreateLocationEvent("/",location));
-        return "index";
+        return "/index";
     }
 }

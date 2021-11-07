@@ -44,7 +44,7 @@ public class CovidAlertSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage("/login")
                 .loginProcessingUrl("/doLogin")
                 .failureUrl("/login?error=true").permitAll()
-                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/index",true)
                 .and()
                 .rememberMe()
                 .key("cleSuperSecrete")

@@ -18,11 +18,13 @@
 
     <p id="demo"></p>
 
+    <button onclick="getCurrentLocation()">Get Location</button>
+
     <form:form modelAttribute="location" method="POST" action="/getLocation">
         <input type="hidden" name = "latitude" id="latitude" >
         <input type="hidden" name = "longitude" id="longitude" >
         <input type="hidden" name = "location_date" id="location_date" >
-        <input onclick="getCurrentLocation()" type="submit" role="button" value="Get Location">
+        <input type="submit" role="button" value="Submit">
     </form:form>
 
     <script>
@@ -38,8 +40,6 @@
         function showPosition(position) {
             document.getElementById("latitude").value = position.coords.latitude;
             document.getElementById("longitude").value = position.coords.longitude;
-            document.getElementById("location_date").value = Date.now();
-            console.log(Date.now());
             console.log(position.coords.latitude);
             x.innerHTML = "Latitude: " + position.coords.latitude +
                 "<br>Longitude: " + position.coords.longitude + "<br>Date: " + Date.now();
