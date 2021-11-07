@@ -38,6 +38,8 @@ public class CovidAlertSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/userConfirm").permitAll()
                 .antMatchers("/index*").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/doRegister").permitAll()
+                .antMatchers("/getLocation").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
                 .loginProcessingUrl("/doLogin")

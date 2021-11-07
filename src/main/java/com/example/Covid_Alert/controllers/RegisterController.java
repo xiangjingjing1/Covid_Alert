@@ -11,14 +11,12 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.Date;
 
+@RestController
 public class RegisterController {
 
     @Autowired
@@ -33,7 +31,7 @@ public class RegisterController {
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
-    @PostMapping("doRegister")
+    @PostMapping("/doRegister")
     public String register(@Validated @ModelAttribute("user")
                                    User user, BindingResult result) {
         // check for errors ...
@@ -43,6 +41,7 @@ public class RegisterController {
         }
         else {	// encrypt password:
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setEnabled(false);
             // save user object:
             userRepository.saveAndFlush(user);
             // create/save an Authority obj ...

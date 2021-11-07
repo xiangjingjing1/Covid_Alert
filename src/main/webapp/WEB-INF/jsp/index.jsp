@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: jingjing
@@ -21,12 +22,12 @@
         <input type="hidden" name = "latitude" id="latitude" >
         <input type="hidden" name = "longitude" id="longitude" >
         <input type="hidden" name = "location_date" id="location_date" >
-        <input onclick="getLocation()" type="submit" role="button" value="Get Location">
+        <input onclick="getCurrentLocation()" type="submit" role="button" value="Get Location">
     </form:form>
 
     <script>
         var x = document.getElementById("demo");
-        function getLocation() {
+        function getCurrentLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
@@ -35,8 +36,13 @@
         }
 
         function showPosition(position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+            document.getElementById("location_date").value = Date.now();
+            console.log(Date.now());
+            console.log(position.coords.latitude);
             x.innerHTML = "Latitude: " + position.coords.latitude +
-                "<br>Longitude: " + position.coords.longitude + Date.now();
+                "<br>Longitude: " + position.coords.longitude + "<br>Date: " + Date.now();
         }
     </script>
 </body>

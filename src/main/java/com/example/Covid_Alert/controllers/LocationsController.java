@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -36,17 +37,6 @@ public class LocationsController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location with ID "+id+" not found");
         }
         return locationRepository.getById(id);
-    }
-
-    @PostMapping("getLocation")
-    public String saveLocation(@Validated @ModelAttribute("location")
-                                   Location location, BindingResult result) {
-        // save location object:
-        locationRepository.saveAndFlush(location);
-        // create/save a location object
-        eventPublisher.publishEvent(new OnCreateLocationEvent("/",location));
-        return "index";
-
     }
 
     @PostMapping
