@@ -41,7 +41,8 @@ public class RegisterController {
         }
         else {	// encrypt password:
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setEnabled(false);
+            // Enabled to true TODO : Confirmation mail
+            user.setEnabled(true);
             // save user object:
             userRepository.saveAndFlush(user);
             // create/save an Authority obj ...
