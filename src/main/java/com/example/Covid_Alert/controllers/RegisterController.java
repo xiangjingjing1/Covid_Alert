@@ -1,5 +1,6 @@
 package com.example.Covid_Alert.controllers;
 
+import com.example.Covid_Alert.models.Authorities;
 import com.example.Covid_Alert.models.User;
 import com.example.Covid_Alert.models.VerificationToken;
 import com.example.Covid_Alert.repositories.AuthorityRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,12 +34,12 @@ public class RegisterController {
     private ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/doRegister")
-    public String register(@Validated @ModelAttribute("user")
+    public RedirectView register(@Validated @ModelAttribute("user")
                                    User user, BindingResult result) {
         // check for errors ...
         // verify that username does not exist:
         if(userRepository.existsUserByUsername(user.getUsername())) {
-            return "register.jsp?user=true";
+            return new RedirectView("/register");
         }
         else {	// encrypt password:
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -45,15 +47,19 @@ public class RegisterController {
             user.setEnabled(true);
             // save user object:
             userRepository.saveAndFlush(user);
+            Authorities authorities = new Authorities();
+            authorities.setUsername(user.getUsername());
+            authorities.setAuthority("ROLE_USER");
+            authorityRepository.saveAndFlush(authorities);
             // create/save an Authority obj ...
             eventPublisher.publishEvent(new OnCreateUserEvent("/",user));
-            return "login";
+            return new RedirectView("/login");
         }
     }
 
     @GetMapping({"/userConfirm"})
     public String confirmUser(@RequestParam("token") String token) {
-        VerificationToken verifToken = verificationTokenRepository.getOne(token);
+        VerificationToken verifToken = verificationTokenRepository.getById(token);
         if (verifToken != null) {
             Date date = Calendar.getInstance().getTime();
             if (date.before(verifToken.getExpiryDate())) {

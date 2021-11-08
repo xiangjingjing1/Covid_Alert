@@ -7,15 +7,14 @@ import javax.persistence.Id;
 import java.util.Calendar;
 import java.util.Date;
 
-@Entity(name="verif_tokens")
+@Entity(name="verificationtoken")
 @Access(AccessType.FIELD)
 public class VerificationToken {
     public static final int EXPIRATION = 60 * 24; // nb min
     @Id
     private String token;
     private String username;
-    private Date expiryDate;
-    private String getOne;
+    private Date expirydate;
 
     public Date calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();
@@ -41,10 +40,10 @@ public class VerificationToken {
     }
 
     public Date getExpiryDate() {
-        return expiryDate;
+        return expirydate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setExpiryDate(Date expirydate) {
+        this.expirydate = expirydate;
     }
 }

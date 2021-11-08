@@ -30,6 +30,9 @@
     <div>
         <a href=""> Forgot password</a>
     </div>
+    <div>
+        <a href="/register"> Sign up </a>
+    </div>
 </div>
 </body>
 </html>
